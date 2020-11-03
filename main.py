@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 from PIL import ImageOps
-from IPython.display import Image, display
+import matplotlib.pyplot as plt
 
 from tensorflow.keras.preprocessing.image import load_img, array_to_img
 
@@ -71,12 +71,14 @@ print(testing_predictions.shape)
 i = 100
 
 # Display input image
-img = Image(filename=validate_input_image_paths[i])
-display(img)
+img = load_img(path=validate_input_image_paths[i])
+plt.imshow(img)
+plt.show()
 
 # Display ground-truth target mask
 img = ImageOps.autocontrast(load_img(validate_target_image_paths[i]))
-display(img)
+plt.imshow(img)
+plt.show()
 
 
 def display_mask(j):
@@ -84,7 +86,9 @@ def display_mask(j):
     mask = np.argmax(testing_predictions[j], axis=-1)
     mask = np.expand_dims(mask, axis=-1)
     img_prediction = ImageOps.autocontrast(image=array_to_img(mask))
-    display(img_prediction)
+
+    plt.imshow(img_prediction)
+    plt.show()
 
 
 # Display mask predicted by our model
