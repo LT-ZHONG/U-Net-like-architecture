@@ -43,16 +43,18 @@ validate_generator = Oxford(
 ''' Build model '''
 model = get_model(img_size=image_size, num_classes=num_classes)
 
+model.load_weights(filepath='oxford_segmentation.h5')
+
 # model.summary()
 
-# model.compile(optimizer='rmsprop', loss='sparse_categorical_crossentropy')
+model.compile(optimizer='rmsprop', loss='sparse_categorical_crossentropy')
 
 callbacks = [
     tf.keras.callbacks.ModelCheckpoint("oxford_segmentation.h5", save_best_only=True)
 ]
 
-epochs = 10
-# model.fit(train_generator, epochs=epochs, validation_data=validate_generator, callbacks=callbacks)  # starting training
+epochs = 50
+model.fit(train_generator, epochs=epochs, validation_data=validate_generator, callbacks=callbacks)  # starting training
 
 model.load_weights(filepath='oxford_segmentation.h5')
 
